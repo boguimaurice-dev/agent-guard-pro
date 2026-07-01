@@ -31,7 +31,7 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/" });
+      if (data.session) navigate({ to: "/app" });
     });
   }, [navigate]);
 
@@ -41,7 +41,7 @@ function AuthPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) return toast.error(error.message);
-    navigate({ to: "/" });
+    navigate({ to: "/app" });
   };
 
   const signUp = async (e: React.FormEvent) => {
@@ -68,7 +68,7 @@ function AuthPage() {
     setLoading(false);
     if (res.error) return toast.error(String(res.error));
     if (res.redirected) return;
-    navigate({ to: "/" });
+    navigate({ to: "/app" });
   };
 
   return (

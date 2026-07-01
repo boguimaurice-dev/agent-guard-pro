@@ -39,7 +39,7 @@ function Landing() {
   const ctaHref = signedIn ? "/" : "/auth";
 
   const goConsole = () => {
-    if (signedIn) navigate({ to: "/" });
+    if (signedIn) navigate({ to: "/app" });
     else navigate({ to: "/auth" });
   };
 
