@@ -15,9 +15,15 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Connexion — SECURA AI" },
+      { title: "Connexion à SECURA AI — Console d'audit sécurité" },
       { name: "description", content: "Connectez-vous à SECURA AI, votre agent IA d'audit et de sécurité web & API." },
+      { property: "og:title", content: "Connexion à SECURA AI" },
+      { property: "og:description", content: "Accédez à votre console d'audit OWASP & API propulsée par un agent IA." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://agent-web-security.lovable.app/auth" },
+      { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: "https://agent-web-security.lovable.app/auth" }],
   }),
   component: AuthPage,
 });
@@ -86,7 +92,7 @@ function AuthPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="mb-8 flex flex-col items-center gap-3">
           <img src={logo} alt="SECURA AI" className="h-24 w-24 rounded-2xl shadow-glow" />
-          <h1 className="font-display text-3xl font-bold tracking-tight text-gradient-cyber">SECURA AI</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight text-gradient-cyber">Connexion à SECURA AI</h1>
           <p className="text-sm text-muted-foreground">Votre agent de sécurité Web &amp; API</p>
         </div>
 

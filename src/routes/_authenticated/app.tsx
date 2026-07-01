@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Shield } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/app")({
+  head: () => ({ meta: [{ title: "Console d'audit — SECURA AI" }, { name: "robots", content: "noindex" }] }),
   component: AppIndex,
 });
 
@@ -34,6 +35,7 @@ function AppIndex() {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
+      <h1 className="sr-only">Console d'audit de sécurité SECURA AI</h1>
       <div className="flex flex-col items-center gap-3 text-muted-foreground">
         <Shield className="h-10 w-10 animate-pulse text-primary" />
         <p className="font-mono text-sm">Initialisation de SECURA AI…</p>

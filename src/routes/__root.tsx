@@ -84,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:site_name", content: "SECURA AI" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -93,6 +94,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "SECURA AI",
+              url: "https://agent-web-security.lovable.app",
+              description:
+                "Agent IA spécialisé en cybersécurité web, audit d'applications et API security, basé sur OWASP et PortSwigger.",
+            },
+            {
+              "@type": "WebSite",
+              name: "SECURA AI",
+              url: "https://agent-web-security.lovable.app",
+            },
+          ],
+        }),
       },
     ],
   }),

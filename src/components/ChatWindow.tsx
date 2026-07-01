@@ -246,6 +246,7 @@ export function ChatWindow({
             <Button
               type="submit"
               disabled={!input.trim()}
+              aria-label="Envoyer le message"
               className="h-[52px] bg-gradient-cyber text-primary-foreground shadow-glow hover:opacity-90"
             >
               <Send className="h-4 w-4" />
