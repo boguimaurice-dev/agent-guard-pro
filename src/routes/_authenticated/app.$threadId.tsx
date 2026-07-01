@@ -8,6 +8,7 @@ import { ChatWindow } from "@/components/ChatWindow";
 import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/app/$threadId")({
+  head: () => ({ meta: [{ title: "Console d'audit — SECURA AI" }, { name: "robots", content: "noindex" }] }),
   component: ThreadPage,
 });
 
@@ -44,6 +45,7 @@ function ThreadPage() {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
+      <h1 className="sr-only">Console d'audit de sécurité SECURA AI</h1>
       <AppSidebar refreshKey={sidebarKey} />
       {messages === null ? (
         <div className="flex flex-1 items-center justify-center">

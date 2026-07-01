@@ -209,7 +209,7 @@ export function AppSidebar({ refreshKey }: { refreshKey?: number }) {
       <div className="md:hidden fixed top-3 left-3 z-40">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button size="icon" variant="outline" className="h-9 w-9 bg-background/80 backdrop-blur">
+            <Button size="icon" variant="outline" aria-label="Ouvrir le menu" className="h-9 w-9 bg-background/80 backdrop-blur">
               <Menu className="h-4 w-4" />
             </Button>
           </SheetTrigger>

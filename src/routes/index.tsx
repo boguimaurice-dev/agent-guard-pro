@@ -9,20 +9,22 @@ export const Route = createFileRoute("/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "SECURA AI — Agent IA d'audit & sécurité Web / API" },
+      { title: "SECURA AI — Audit OWASP & sécurité API en conversation" },
       {
         name: "description",
         content:
-          "SECURA AI est votre agent IA spécialisé en cybersécurité web, audit d'applications et API security. Basé sur OWASP Top 10 et les labs PortSwigger.",
+          "Console IA d'audit sécurité : collez une requête HTTP, obtenez tests, payloads et rapport OWASP / API en direct.",
       },
-      { property: "og:title", content: "SECURA AI — Agent IA d'audit & sécurité Web / API" },
+      { property: "og:title", content: "SECURA AI — Audit OWASP & sécurité API en conversation" },
       {
         property: "og:description",
         content: "Audit, détection et remédiation des vulnérabilités OWASP / API en conversation avec un agent IA expert.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://agent-web-security.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://agent-web-security.lovable.app/" }],
   }),
   component: Landing,
 });

@@ -1,0 +1,9 @@
+# SECURA AI
+
+> Agent IA d'audit et de sécurité web & API, basé sur la méthodologie OWASP Top 10 et les techniques PortSwigger. Il analyse des requêtes HTTP, identifie des vulnérabilités probables, propose des payloads et rédige des rapports d'audit.
+
+SECURA AI est une console conversationnelle qui aide analystes, pentesters et développeurs à détecter, comprendre et corriger les failles web et API (IDOR/BOLA, injections, auth cassée, mass assignment, exposition de données, etc.), avec un mode entraînement inspiré des labs PortSwigger.
+
+## Pages
+
+- [Accueil](/): Présentation de l'agent, capacités d'audit et de formation.

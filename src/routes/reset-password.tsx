@@ -15,7 +15,13 @@ export const Route = createFileRoute("/reset-password")({
     meta: [
       { title: "Réinitialiser le mot de passe — SECURA AI" },
       { name: "description", content: "Définissez un nouveau mot de passe pour votre compte SECURA AI." },
+      { property: "og:title", content: "Réinitialiser votre mot de passe SECURA AI" },
+      { property: "og:description", content: "Choisissez un nouveau mot de passe pour votre console d'audit SECURA AI." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://agent-web-security.lovable.app/reset-password" },
+      { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: "https://agent-web-security.lovable.app/reset-password" }],
   }),
   component: ResetPasswordPage,
 });
