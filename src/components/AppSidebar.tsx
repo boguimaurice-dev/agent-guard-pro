@@ -42,7 +42,7 @@ export function AppSidebar({ refreshKey }: { refreshKey?: number }) {
     try {
       const t = await create();
       await reload();
-      navigate({ to: "/$threadId", params: { threadId: t.id } });
+      navigate({ to: "/app/$threadId", params: { threadId: t.id } });
     } catch (e) {
       toast.error("Impossible de créer l'audit");
       console.error(e);
@@ -58,7 +58,7 @@ export function AppSidebar({ refreshKey }: { refreshKey?: number }) {
       const remaining = threads.filter((t) => t.id !== id);
       setThreads(remaining);
       if (params.threadId === id) {
-        if (remaining[0]) navigate({ to: "/$threadId", params: { threadId: remaining[0].id } });
+        if (remaining[0]) navigate({ to: "/app/$threadId", params: { threadId: remaining[0].id } });
         else navigate({ to: "/" });
       }
     } catch (err) {
@@ -108,7 +108,7 @@ export function AppSidebar({ refreshKey }: { refreshKey?: number }) {
                     )}
                   >
                     <Link
-                      to="/$threadId"
+                      to="/app/$threadId"
                       params={{ threadId: t.id }}
                       className="flex flex-1 items-center gap-2 truncate"
                     >
