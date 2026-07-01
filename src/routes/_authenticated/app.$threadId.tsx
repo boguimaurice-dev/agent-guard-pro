@@ -7,7 +7,7 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { ChatWindow } from "@/components/ChatWindow";
 import { Loader2 } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/$threadId")({
+export const Route = createFileRoute("/_authenticated/app/$threadId")({
   component: ThreadPage,
 });
 
