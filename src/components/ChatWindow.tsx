@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Shield, Loader2, User } from "lucide-react";
+import { Send, Shield, Loader2, User, Square, Download } from "lucide-react";
 import { Markdown } from "@/components/Markdown";
 import { toast } from "sonner";
 import logo from "@/assets/secura-logo.png";
@@ -15,6 +15,28 @@ const SUGGESTIONS = [
   "Entraîne-moi sur une injection SQL basique (lab)",
   "Analyse cette requête HTTP et propose des tests",
 ];
+
+function messagesToMarkdown(messages: UIMessage[]): string {
+  const date = new Date().toISOString();
+  const lines: string[] = [
+    `# Rapport d'audit SECURA AI`,
+    ``,
+    `> Exporté le ${date}`,
+    ``,
+    `---`,
+    ``,
+  ];
+  for (const m of messages) {
+    const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("").trim();
+    if (!text) continue;
+    lines.push(m.role === "user" ? `## 👤 Analyste` : `## 🛡️ SECURA AI`);
+    lines.push("");
+    lines.push(text);
+    lines.push("");
+  }
+  lines.push(`---`, ``, `_Rapport généré par SECURA AI — usage éthique uniquement._`);
+  return lines.join("\n");
+}
 
 export function ChatWindow({
   threadId,
@@ -41,7 +63,7 @@ export function ChatWindow({
       }),
   );
 
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, sendMessage, status, error, stop } = useChat({
     id: threadId,
     messages: initialMessages,
     transport,
@@ -80,16 +102,40 @@ export function ChatWindow({
     submit(input);
   };
 
+  const exportReport = () => {
+    if (messages.length === 0) return toast.error("Rien à exporter");
+    const md = messagesToMarkdown(messages);
+    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `secura-audit-${threadId.slice(0, 8)}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Rapport exporté");
+  };
+
   const empty = messages.length === 0;
 
   return (
     <div className="flex h-screen flex-1 flex-col">
       <header className="flex items-center gap-3 border-b border-border/70 bg-background/60 px-6 py-3 backdrop-blur">
         <Shield className="h-5 w-5 text-primary" />
-        <div>
+        <div className="flex-1">
           <div className="font-display text-sm font-semibold tracking-wide">Console d'audit</div>
           <div className="text-[11px] text-muted-foreground">OWASP Top 10 • PortSwigger • API Security</div>
         </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={exportReport}
+          disabled={messages.length === 0}
+          className="gap-2"
+        >
+          <Download className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Exporter</span>
+        </Button>
       </header>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto">
@@ -186,13 +232,25 @@ export function ChatWindow({
             className="min-h-[52px] max-h-40 resize-none bg-input/60 font-mono text-sm"
             disabled={isLoading}
           />
-          <Button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            className="h-[52px] bg-gradient-cyber text-primary-foreground shadow-glow hover:opacity-90"
-          >
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          </Button>
+          {isLoading ? (
+            <Button
+              type="button"
+              onClick={() => stop()}
+              variant="outline"
+              className="h-[52px] border-destructive/50 text-destructive hover:bg-destructive/10"
+              aria-label="Arrêter la génération"
+            >
+              <Square className="h-4 w-4" />
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              disabled={!input.trim()}
+              className="h-[52px] bg-gradient-cyber text-primary-foreground shadow-glow hover:opacity-90"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          )}
         </div>
         <p className="mx-auto mt-2 max-w-3xl text-[11px] text-muted-foreground">
           ⚠️ Tests uniquement sur des cibles autorisées. Utilisez PortSwigger Academy / DVWA / Juice Shop pour l'entraînement.
