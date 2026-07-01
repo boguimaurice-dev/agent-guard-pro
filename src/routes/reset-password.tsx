@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { KeyRound, Shield } from "lucide-react";
+import { KeyRound, Shield, CheckCircle2, LogIn } from "lucide-react";
 import logo from "@/assets/secura-logo.png";
 
 export const Route = createFileRoute("/reset-password")({
@@ -26,9 +26,9 @@ function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    // Supabase émet PASSWORD_RECOVERY après avoir consommé le lien
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") setReady(true);
     });
@@ -47,7 +47,12 @@ function ResetPasswordPage() {
     setLoading(false);
     if (error) return toast.error(error.message);
     toast.success("Mot de passe mis à jour");
-    navigate({ to: "/app" });
+    setDone(true);
+  };
+
+  const reconnect = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth" });
   };
 
   return (
@@ -56,10 +61,22 @@ function ResetPasswordPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="mb-8 flex flex-col items-center gap-3">
           <img src={logo} alt="SECURA AI" className="h-20 w-20 rounded-2xl shadow-glow" />
-          <h1 className="font-display text-2xl font-bold text-gradient-cyber">Nouveau mot de passe</h1>
+          <h1 className="font-display text-2xl font-bold text-gradient-cyber">
+            {done ? "Mot de passe mis à jour" : "Nouveau mot de passe"}
+          </h1>
         </div>
         <Card className="panel p-6">
-          {!ready ? (
+          {done ? (
+            <div className="flex flex-col items-center gap-4 py-4 text-center">
+              <CheckCircle2 className="h-12 w-12 text-primary" />
+              <p className="text-sm text-muted-foreground">
+                Votre mot de passe a bien été réinitialisé. Reconnectez-vous pour accéder à SECURA AI.
+              </p>
+              <Button onClick={reconnect} className="w-full bg-gradient-cyber text-primary-foreground shadow-glow hover:opacity-90">
+                <LogIn className="mr-2 h-4 w-4" /> Se reconnecter
+              </Button>
+            </div>
+          ) : !ready ? (
             <div className="flex flex-col items-center gap-3 py-6 text-center text-sm text-muted-foreground">
               <Shield className="h-6 w-6 animate-pulse text-primary" />
               Ouvrez le lien reçu par email pour continuer.
@@ -84,3 +101,4 @@ function ResetPasswordPage() {
     </div>
   );
 }
+
