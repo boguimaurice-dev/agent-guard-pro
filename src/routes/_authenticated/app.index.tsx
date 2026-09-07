@@ -4,7 +4,7 @@ import { createThread, listThreads } from "@/lib/threads.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Shield } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/app")({
+export const Route = createFileRoute("/_authenticated/app/")({
   head: () => ({ meta: [{ title: "Console d'audit — SECURA AI" }, { name: "robots", content: "noindex" }] }),
   component: AppIndex,
 });
